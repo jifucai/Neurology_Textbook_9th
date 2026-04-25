@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《神经病学》第九版</title>
+    <style>
+        :root {
+            --paper: #f6f2ea;
+            --paper-dark: #ede6d9;
+            --text: #3d3226;
+            --text-light: #5c4f3f;
+            --title: #4a2c17;
+            --accent-brown: #8b5e3c;
+            --func-name: #2c3e6b;
+            --func-name-bg: #e8ecf4;
+            --location-marker: #ffeb99;
+            --location-marker-2: #ffe88c;
+            --function-underline: #c4956a;
+            --lesion-area: #8b1a1a;
+            --lesion-area-bg: #fce8e6;
+            --lesion-symptom-underline: #c47a4a;
+            --divider: #d9ccb8;
+            --tag-bg: #f0e6d3;
+            --highlight-yellow: #fff3b8;
+            --highlight-pink: #fde2d8;
+            --border-soft: #e3d9c8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #e8e0d3;
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(180, 160, 140, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 75% 60%, rgba(160, 140, 120, 0.1) 0%, transparent 50%);
+            font-family: "Noto Sans SC", "PingFang SC", "Helvetica Neue", "Segoe UI", "Arial", sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem 4rem;
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.85;
+            letter-spacing: 0.02em;
+        }
+
+        .notebook {
+            max-width: 780px;
+            width: 100%;
+            background: var(--paper);
+            background-image:
+                repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 31px,
+                    rgba(180, 160, 140, 0.12) 31px,
+                    rgba(180, 160, 140, 0.12) 32px),
+                linear-gradient(to bottom, rgba(255, 252, 245, 0.6) 0%, var(--paper) 8%);
+            border-radius: 6px;
+            padding: 3rem 2.5rem 3.5rem;
+            box-shadow:
+                0 2px 20px rgba(80, 50, 30, 0.10),
+                0 8px 40px rgba(80, 50, 30, 0.06),
+                inset 0 0 0 1px rgba(200, 180, 150, 0.25);
+            position: relative;
+            border-left: 6px solid #d4c4aa;
+            border-right: 1px solid rgba(180, 150, 120, 0.2);
+        }
+
+        .notebook::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #c4a882, #d9bfa0, #c4a882);
+            border-radius: 6px 6px 0 0;
+            opacity: 0.7;
+        }
+
+        .notebook::after {
+            content: '';
+            position: absolute;
+            bottom: 1.5rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(180, 150, 120, 0.08);
+            pointer-events: none;
+        }
+
+        /* 总标题 */
+        .main-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--title);
+            letter-spacing: 0.06em;
+            text-align: center;
+            margin-bottom: 0.4rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px dotted var(--divider);
+        }
+        .main-subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #8b7355;
+            letter-spacing: 0.08em;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        /* 各级标题 */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #3d2613;
+            margin-top: 2.2rem;
+            margin-bottom: 0.8rem;
+            padding-left: 0.6rem;
+            border-left: 4px solid #c4a070;
+            letter-spacing: 0.04em;
+        }
+        .subsection-title {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #4d2f18;
+            margin-top: 1.6rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1.5px dashed #d9c8ad;
+            letter-spacing: 0.03em;
+        }
+        .sub-subsection-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #5a3822;
+            margin-top: 1.2rem;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* 结构标签如【解剖结构与生理功能】 */
+        .struct-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #6b5a3e;
+            background: #f0e8d8;
+            padding: 0.15rem 0.7rem;
+            border-radius: 3px;
+            letter-spacing: 0.05em;
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e0d3ba;
+        }
+        .lesion-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #7a3a2a;
+            background: #fceee8;
+            padding: 0.15rem 0.7rem;
+            border-radius: 3px;
+            letter-spacing: 0.05em;
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e8ccbf;
+        }
+
+        /* 功能区名称 - 显眼加粗 */
+        .func-name {
+            font-weight: 800;
+            color: #1e3a5f;
+            background: #e3e9f3;
+            padding: 0.08rem 0.35rem;
+            border-radius: 2px;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        /* 位置 - 荧光标识 */
+        .location {
+            background: #ffeb99;
+            padding: 0.06rem 0.3rem;
+            border-radius: 2px;
+            font-weight: 600;
+            color: #3d2a0f;
+            letter-spacing: 0.02em;
+            box-shadow: 0 1px 3px rgba(200, 170, 80, 0.2);
+            white-space: nowrap;
+        }
+
+        /* 功能描述 - 下划线 */
+        .function-desc {
+            border-bottom: 2.5px solid #c4956a;
+            padding-bottom: 0.08rem;
+            color: #4a3020;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+        }
+
+        /* 病变区域 - 显眼深红加粗 */
+        .lesion-area {
+            font-weight: 800;
+            color: #8b1a1a;
+            background: #fde6e0;
+            padding: 0.08rem 0.4rem;
+            border-radius: 2px;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            border: 1px solid #f0c8ba;
+        }
+
+        /* 病损表现 - 下划线 */
+        .lesion-symptom {
+            border-bottom: 2px dashed #c47a4a;
+            padding-bottom: 0.06rem;
+            color: #5a3020;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+        }
+
+        /* 普通段落 */
+        .paragraph {
+            margin-bottom: 0.7rem;
+            text-indent: 2em;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .paragraph-no-indent {
+            margin-bottom: 0.7rem;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        /* 列表项样式 */
+        .list-item {
+            margin-bottom: 0.55rem;
+            padding-left: 1.6em;
+            position: relative;
+            color: var(--text);
+            font-size: 0.93rem;
+        }
+        .list-item::before {
+            content: '○';
+            position: absolute;
+            left: 0.2em;
+            top: 0;
+            color: #b89570;
+            font-size: 0.7rem;
+            line-height: 2.2;
+        }
+        .list-item-sub {
+            margin-bottom: 0.4rem;
+            padding-left: 2.8em;
+            position: relative;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .list-item-sub::before {
+            content: '—';
+            position: absolute;
+            left: 0.8em;
+            top: 0;
+            color: #b89570;
+            font-size: 0.7rem;
+            line-height: 2.3;
+        }
+
+        /* 嵌套编号 */
+        .nest-num {
+            font-weight: 700;
+            color: #6b4d30;
+            margin-right: 0.3em;
+        }
+
+        /* 分隔装饰 */
+        .divider-dot {
+            text-align: center;
+            margin: 1.8rem 0 1.2rem;
+            color: #c8b898;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            user-select: none;
+        }
+
+        /* 小标签 */
+        .small-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #6b4d30;
+            background: #f0e6d3;
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            letter-spacing: 0.04em;
+            margin-right: 0.3em;
+            border: 1px solid #e0d2b8;
+        }
+
+        /* 重点框 */
+        .highlight-box {
+            background: #fffef9;
+            border: 1.5px dashed #d9c8a8;
+            border-radius: 4px;
+            padding: 1rem 1.3rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+        .highlight-box::before {
+            content: '✦';
+            position: absolute;
+            top: -0.7rem;
+            left: 1rem;
+            color: #c4a070;
+            font-size: 0.8rem;
+            background: #fffef9;
+            padding: 0 0.4rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .notebook {
+                padding: 2rem 1.2rem 2.5rem;
+                border-left-width: 4px;
+                border-radius: 0;
+            }
+            .main-title {
+                font-size: 1.3rem;
+            }
+            .paragraph {
+                text-indent: 1.4em;
+                font-size: 0.88rem;
+            }
+            .func-name,
+            .lesion-area {
+                white-space: normal;
+            }
+            .location {
+                white-space: normal;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+            .notebook {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notebook">
+
+        <!-- 标题 -->
+        <div class="main-title">《神经病学》第九版</div>
+        <div class="main-subtitle">第二章 神经系统的解剖、生理及病损的定位诊断</div>
+
+        <!-- 开头总论 -->
+        <p class="paragraph">
+            <strong>神经系统疾病的诊断</strong>包括<span class="lesion-symptom">定位诊断</span>（病变部位诊断）和<span class="lesion-symptom">定性诊断</span>（病因诊断）两个部分。临床医师根据解剖学、生理学和病理学知识及辅助检查结果对症状进行分析，推断其发病部位，称为定位诊断；在此基础上确定病变的性质和原因，这一过程称为定性诊断。定位诊断是诊断神经系统疾病的第一步，正确完成定位诊断取决于三个因素，一是对神经系统解剖、生理和病理的理解，二是对这些结构病损后症状的掌握，三是临床基本功的扎实运用。本章主要讨论神经结构病损与临床症状之间的关系，为临床定位诊断提供理论基础。
+        </p>
+        <p class="paragraph">
+            神经结构病损后出现的症状，按其表现可分为四组，即<span class="func-name">缺损症状</span>、<span class="func-name">刺激症状</span>、<span class="func-name">释放症状</span>和<span class="func-name">断联体克症状</span>。①<span class="func-name">缺损症状</span>：指<span class="function-desc">神经结构受损时，正常功能的减弱或消失</span>。例如一侧大脑内囊区梗死时，破坏了通过内囊的运动和感觉传导束而出现对侧偏瘫和偏身感觉缺失；面神经炎时引起面肌瘫痪等。②<span class="func-name">刺激症状</span>：指<span class="function-desc">神经结构受激惹后所引起的过度兴奋表现</span>。例如大脑皮质运动区受肿瘤、瘢痕刺激后引起的癫痫；腰椎间盘突出引起的坐骨神经痛等。③<span class="func-name">释放症状</span>：指<span class="function-desc">高级中枢受损后，原来受其抑制的低级中枢因抑制解除而出现功能亢进</span>。如上运动神经元损害后出现的锥体束征，表现为肌张力增高、腱反射亢进和病理征阳性；基底核病变引起的舞蹈症和手足徐动症等。④<span class="func-name">断联体克症状</span>：指<span class="function-desc">中枢神经系统局部发生急性严重损害时，引起功能上与受损部位有密切联系的远隔部位神经功能短暂丧失</span>。如较大量内囊出血急性期，患者出现对侧肢体偏瘫、肌张力减低、深浅反射消失和病理征阴性，称脑休克；急性脊髓横贯性损伤时，损伤平面以下表现为弛缓性瘫痪，称脊髓休克。休克期过后，多逐渐出现受损结构的功能缺损或释放症状。
+        </p>
+
+        <div class="divider-dot">· · · · · ·</div>
+
+        <!-- 第一节 中枢神经 -->
+        <div class="section-title">第一节 中枢神经</div>
+        <p class="paragraph">
+            中枢神经系统（central nervous system, CNS）包括脑和脊髓，脑分大脑、间脑、脑干和小脑等部分，脊髓由含有神经细胞的灰质和含上、下行传导束的白质组成。不同的神经结构受损后，其临床症状各有特点。
+        </p>
+
+        <!-- 一、大脑半球 -->
+        <div class="subsection-title">一、大脑半球</div>
+        <p class="paragraph">
+            大脑半球（cerebral hemisphere）的表面由大脑皮质所覆盖，在脑表面形成脑沟和脑回，内部为白质、基底核及侧脑室。两侧大脑半球由胼胝体连接。每侧大脑半球借中央沟、大脑外侧裂和其延长线、顶枕沟和枕前切迹的连线分为额叶、顶叶、颞叶和枕叶，根据功能又有不同分区。此外，大脑还包括位于大脑外侧裂深部的岛叶和位于半球内侧面的由边缘叶、杏仁核、丘脑前核、下丘脑等组成的边缘系统。
+        </p>
+        <p class="paragraph">
+            两侧大脑半球的功能不完全对称，按功能分为优势半球和非优势半球。优势半球为在语言、逻辑思维、综合分析及计算功能等方面占优势的半球，多位于左侧，只有一小部分右利手和约半数左利手者可能在右侧。非优势半球多为右侧大脑半球，主要在音乐、美术、综合能力、空间、几何图形、人物面容的识别及视觉记忆功能等方面占优势。不同部位的损害会产生不同的临床症状。
+        </p>
+
+        <!-- （一）额叶 -->
+        <div class="sub-subsection-title">（一）额叶</div>
+
+        <span class="struct-label">【解剖结构与生理功能】</span>
+        <p class="paragraph">
+            <span class="location">额叶（frontal lobe）</span>占大脑半球表面的前1/3，位于外侧裂上方和中央沟前方，是大脑半球主要功能区之一。前端为额极，外侧面以中央沟与顶叶分界，底面以外侧裂与颞叶分界，内侧面以扣带沟与扣带回分界。中央沟前有与之略平行的中央前沟，两沟之间为<span class="location">中央前回</span>，是<span class="func-name">大脑皮质运动区</span>。中央前回前方从上向下有额上沟及额下沟，将额叶外侧面的其余部分分为额上回、额中回和额下回。
+        </p>
+        <p class="paragraph">
+            额叶的主要功能与精神、语言和随意运动有关。其主要功能区包括：①<span class="func-name">皮质运动区</span>：位于<span class="location">中央前回</span>，该区大锥体细胞的轴突构成了锥体束的大部，<span class="function-desc">支配对侧半身的随意运动</span>。身体各部位代表区在此的排列由上向下呈"倒人状"，头部在下，最接近外侧裂；足最高，位于额叶内侧面。②<span class="func-name">运动前区</span>：位于<span class="location">皮质运动区前方</span>，是<span class="function-desc">锥体外系的皮质中枢</span>，发出纤维到丘脑、基底核和红核等处，与<span class="function-desc">联合运动和姿势调节</span>有关；此区也发出额桥小脑束，与<span class="function-desc">共济运动</span>有关；此外，此区也是<span class="function-desc">自主神经皮质中枢</span>的一部分；此区还包括<span class="function-desc">肌张力的抑制区</span>，此区受损瘫痪不明显，可出现共济失调和步态不稳等症状。③<span class="func-name">皮质侧视中枢</span>：位于<span class="location">额中回后部</span>，<span class="function-desc">司双眼同向侧视运动</span>。④<span class="func-name">书写中枢</span>：位于<span class="location">优势半球的额中回后部</span>，与支配手部的皮质运动区相邻。⑤<span class="func-name">运动性语言中枢</span>[布罗卡（Broca）区]：位于<span class="location">优势半球外侧裂上方和额下回后部交界的三角区</span>，<span class="function-desc">管理语言运动</span>。⑥<span class="func-name">额叶前部</span>：有广泛的联络纤维，与<span class="function-desc">记忆、判断、抽象思维、情感和冲动行为</span>有关。
+        </p>
+
+        <span class="lesion-label">【病损表现与定位诊断】</span>
+        <p class="paragraph-no-indent">额叶病变时主要引起以下临床表现。</p>
+        <p class="paragraph-no-indent"><span class="nest-num">1. 外侧面</span> 以脑梗死、肿瘤和外伤多见。</p>
+        <p class="list-item-sub">
+            <span class="nest-num">（1）</span><span class="lesion-area">额极病变</span>：以精神障碍为主，表现为<span class="lesion-symptom">记忆力和注意力减退，表情淡漠，反应迟钝，缺乏主动性和内省力，思维和综合能力下降，可有欣快感或易怒</span>。
+        </p>
+        <p class="list-item-sub">
+            <span class="nest-num">（2）</span><span class="lesion-area">中央前回病变</span>：刺激性病变可导致<span class="lesion-symptom">对侧上、下肢或面部的抽搐</span>[杰克逊（Jackson）癫痫]或<span class="lesion-symptom">继发全身性癫痫发作</span>；破坏性病变多引起<span class="lesion-symptom">单瘫</span>。中央前回上部受损产生<span class="lesion-symptom">对侧下肢瘫痪</span>，下部受损产生<span class="lesion-symptom">对侧面、舌或上肢的瘫痪</span>；严重而广泛的损害可出现<span class="lesion-symptom">对侧偏瘫</span>。
+        </p>
+        <p class="list-item-sub">
+            <span class="nest-num">（3）</span><span class="lesion-area">额上回后部病变</span>：可产生<span class="lesion-symptom">对侧上肢强握反射和摸索反射</span>。强握反射是指物体触及患者病变对侧手掌时，引起手指和手掌屈曲反应，出现紧握该物不放的现象。摸索反射是指当病变对侧手掌碰触到物体时，该肢体向各方向摸索，直至抓住该物紧握不放的现象。
+        </p>
+        <p class="list-item-sub">
+            <span class="nest-num">（4）</span><span class="lesion-area">额中回后部病变</span>：刺激性病变引起<span class="lesion-symptom">双眼向病灶对侧凝视</span>，破坏性病变引起<span class="lesion-symptom">双眼向病灶侧凝视</span>；更后部位的病变导致<span class="lesion-symptom">书写不能</span>。
+        </p>
+        <p class="list-item-sub">
+            <span class="nest-num">（5）</span><span class="lesion-area">优势侧额下回后部病变</span>：产生<span class="lesion-symptom">运动性失语</span>。
+        </p>
+        <p class="paragraph-no-indent"><span class="nest-num">2. 内侧面</span> 以大脑前动脉闭塞和矢状窦旁脑膜瘤多见。后部的<span class="lesion-area">旁中央小叶（paracentral lobule）病变</span>可使<span class="lesion-symptom">对侧膝以下瘫痪</span>，矢状窦旁脑膜瘤可压迫两侧下肢运动区而使其产生瘫痪，<span class="lesion-symptom">伴有尿便障碍</span>，临床上可凭膝关节以下严重瘫痪而膝关节以上无瘫痪与脊髓病变相鉴别。</p>
+        <p class="paragraph-no-indent"><span class="nest-num">3. 底面</span> 以额叶底面的挫裂伤、嗅沟脑膜瘤和蝶骨嵴脑膜瘤较为多见。病损主要位于额叶眶面，表现为<span class="lesion-symptom">饮食过量、胃肠蠕动过度、多尿、高热、出汗和皮肤血管扩张</span>等症状。额叶底面肿瘤可出现<span class="lesion-symptom">同侧嗅觉缺失和视神经萎缩，对侧视神经乳头水肿</span>，称为<span class="lesion-area">福-肯综合征（Foster-Kennedy syndrome）</span>。</p>
+
+        <div class="divider-dot">· · ·</div>
+
+        <!-- （二）顶叶 -->
+        <div class="sub-subsection-title">（二）顶叶</div>
+
+        <span class="struct-label">【解剖结构与生理功能】</span>
+        <p class="paragraph">
+            <span class="location">顶叶（parietal lobe）</span>位于中央沟后、顶枕沟前和外侧裂延线的上方。前面以中央沟与额叶分界，后面以顶枕沟和枕前切迹的连线与枕叶分界，下面以外侧裂与颞叶分界。中央沟与中央后沟之间为<span class="location">中央后回</span>，为<span class="func-name">大脑皮质感觉区</span>。中央后回后面有横行的顶间沟，将顶叶分为顶上小叶和顶下小叶。顶下小叶由围绕外侧裂末端的<span class="location">缘上回</span>和围绕颞上沟终点的<span class="location">角回</span>组成。顶叶主要有以下功能分区：①<span class="func-name">皮质感觉区</span>：<span class="location">中央后回</span>为<span class="function-desc">深浅感觉的皮质中枢</span>，<span class="function-desc">接受对侧肢体的深浅感觉信息</span>，各部位代表区的排列也呈"倒人状"，头部在下而足在顶端。②<span class="func-name">顶上小叶</span>：为<span class="function-desc">触觉和实体觉的皮质中枢</span>。③<span class="func-name">运用中枢</span>：位于<span class="location">优势半球的缘上回</span>，与<span class="function-desc">复杂动作和劳动技巧</span>有关。④<span class="func-name">视觉性语言中枢</span>（又称阅读中枢）：位于<span class="location">角回</span>，靠近视觉中枢，为<span class="function-desc">理解看到的文字和符号的皮质中枢</span>。
+        </p>
+
+        <span class="lesion-label">【病损表现与定位诊断】</span>
+        <p class="paragraph-no-indent">顶叶病变主要表现为皮质性感觉障碍、失用和失认症等。</p>
+        <p class="list-item">
+            <span class="nest-num">1.</span> <span class="lesion-area">中央后回和顶上小叶病变</span> 破坏性病变主要表现为<span class="lesion-symptom">病灶对侧肢体复合性感觉障碍，如实体觉、位置觉、两点辨别觉和皮肤定位觉的减退或缺失</span>。刺激性病变可出现<span class="lesion-symptom">病灶对侧肢体的部分性感觉性癫痫</span>，如扩散到中央前回运动区，可引起部分性运动性发作，也可扩展为全身抽搐及意识丧失。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">2.</span> <span class="lesion-area">顶下小叶（缘上回和角回）病变</span>
+        </p>
+        <p class="list-item-sub">
+            <span class="nest-num">（1）</span><span class="lesion-area">体象障碍</span>：顶叶病变可产生<span class="lesion-symptom">体象障碍</span>。
+        </p>
+        <p class="list-item-sub">
+            <span class="nest-num">（2）</span><span class="lesion-area">格斯特曼综合征（Gerstmann syndrome）</span>：为<span class="lesion-symptom">优势侧角回损害</span>所致，主要表现有<span class="lesion-symptom">计算不能（失算症）、手指失认、左右辨别不能（左右失认症）、书写不能（失写症），有时伴失读</span>。
+        </p>
+        <p class="list-item-sub">
+            <span class="nest-num">（3）</span><span class="lesion-area">失用症</span>：优势侧缘上回是运用功能的皮质代表区，发出的纤维至同侧中央前回运动中枢，再经胼胝体到达对侧中央前回运动中枢，因此优势侧缘上回病变时可产生<span class="lesion-symptom">双侧失用症</span>。
+        </p>
+
+        <div class="divider-dot">· · ·</div>
+
+        <!-- （三）颞叶 -->
+        <div class="sub-subsection-title">（三）颞叶</div>
+
+        <span class="struct-label">【解剖结构与生理功能】</span>
+        <p class="paragraph">
+            <span class="location">颞叶（temporal lobe）</span>位于外侧裂的下方，顶枕沟前方。以外侧裂与额、顶叶分界，后面与枕叶相邻。颞叶前端为颞极，外侧面有与外侧裂平行的颞上沟以及底面的颞下沟，以两沟为界划分了颞上回、颞中回和颞下回。颞上回的一部分掩入外侧裂中，为颞横回。颞叶的主要功能区包括：①<span class="func-name">感觉性语言中枢</span>[韦尼克（Wernicke）区]：位于<span class="location">优势半球颞上回后部</span>；②<span class="func-name">听觉中枢</span>：位于<span class="location">颞上回中部及颞横回</span>；③<span class="func-name">嗅觉中枢</span>：位于<span class="location">钩回和海马回前部</span>，<span class="function-desc">接受双侧嗅觉纤维的传入</span>；④<span class="func-name">颞叶前部</span>：与<span class="function-desc">记忆、联想和比较等高级神经活动</span>有关；⑤<span class="func-name">颞叶内侧面</span>：此区域属边缘系统，<span class="location">海马</span>是其中的重要结构，与<span class="function-desc">记忆、精神、行为和内脏功能</span>有关。
+        </p>
+
+        <span class="lesion-label">【病损表现与定位诊断】</span>
+        <p class="paragraph-no-indent">颞叶病变时主要引起听觉、语言、记忆及精神活动障碍。</p>
+        <p class="list-item">
+            <span class="nest-num">1.</span> <span class="lesion-area">优势半球颞上回后部（Wernicke区）损害</span> 患者能听见对方和自己说话的声音，但不能理解说话的含义，即<span class="lesion-symptom">感觉性失语</span>。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">2.</span> <span class="lesion-area">优势半球颞中回后部损害</span> 患者对于一个物品，能说出它的用途，但说不出它的名称。如对钥匙，只能说出它是"开门用的"，但说不出"钥匙"名称。如果告诉他这叫"钥匙"，患者能复述，但很快又忘掉，称为<span class="lesion-symptom">命名性失语</span>。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">3.</span> <span class="lesion-area">颞叶钩回损害</span> 可出现<span class="lesion-symptom">幻嗅和幻味，做舔唇、咀嚼动作</span>，称为"钩回发作"。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">4.</span> <span class="lesion-area">海马损害</span> 可发生<span class="lesion-symptom">癫痫，出现错觉、幻觉、自动症、似曾相识感、情感异常、精神异常、内脏症状和抽搐</span>，还可以导致<span class="lesion-symptom">严重的近记忆障碍</span>。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">5.</span> <span class="lesion-area">优势侧颞叶广泛病变或双侧颞叶病变</span> 可出现精神症状，多为人格改变、情绪异常、记忆障碍、精神迟钝及表情淡漠。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">6.</span> <span class="lesion-area">颞叶深部的视辐射纤维和视束受损</span> 可出现<span class="lesion-symptom">视野改变，表现为双眼对侧视野的同向上象限盲</span>。
+        </p>
+
+        <div class="divider-dot">· · ·</div>
+
+        <!-- （四）枕叶 -->
+        <div class="sub-subsection-title">（四）枕叶</div>
+
+        <span class="struct-label">【解剖结构与生理功能】</span>
+        <p class="paragraph">
+            <span class="location">枕叶（occipital lobe）</span>位于顶枕沟和枕前切迹连线的后方，为大脑半球后部的小部分。其后端为枕板，内侧面以距状裂分成楔回和舌回。围绕<span class="location">距状裂</span>的皮质为<span class="func-name">视中枢</span>，亦称纹状区，<span class="function-desc">接受外侧膝状体传来的视网膜视觉冲动</span>。距状裂上方的视皮质接受上部视网膜传来的冲动，下方的视皮质接受下部视网膜传来的冲动。枕叶主要与视觉有关。
+        </p>
+
+        <span class="lesion-label">【病损表现与定位诊断】</span>
+        <p class="paragraph-no-indent">枕叶损害主要引起视觉障碍。</p>
+        <p class="list-item">
+            <span class="nest-num">1.</span> <span class="lesion-area">视觉中枢病变</span> 刺激性病变可出现<span class="lesion-symptom">闪光、暗影、色彩等幻视现象</span>，破坏性病变可出现<span class="lesion-symptom">视野缺损</span>。视野缺损的类型取决于视皮质损害范围的大小。①双侧视觉中枢病变产生<span class="lesion-symptom">皮质盲，表现为全盲，视物不见，但对光反射存在</span>。②一侧视中枢病变可产生<span class="lesion-symptom">偏盲，特点为对侧视野同向性偏盲，而中心视野不受影响，称黄斑回避</span>。③距状裂以下舌回损害可产生<span class="lesion-symptom">对侧同向性上象限盲</span>；距状裂以上楔回损害可产生<span class="lesion-symptom">对侧同向性下象限盲</span>。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">2.</span> <span class="lesion-area">优势侧纹状区周围病变</span> 患者并非失明，但对图形、面容或颜色等失去辨别能力，有时须借助触觉方可辨认。如给患者看钥匙不能认识，放在手上触摸一下即能辨认，称为<span class="lesion-symptom">视觉失认</span>。
+        </p>
+        <p class="list-item">
+            <span class="nest-num">3.</span> <span class="lesion-area">顶枕颞交界区病变</span> 可出现<span class="lesion-symptom">视物变形</span>。患者看物体发生变大、变小、形状歪斜及颜色改变等现象，这些症状有时是癫痫的先兆。
+        </p>
+
+        <div class="divider-dot">· · ·</div>
+
+        <!-- （五）岛叶 -->
+        <div class="sub-subsection-title">（五）岛叶</div>
+        <p class="paragraph">
+            <span class="location">岛叶（insular lobe）</span>又称脑岛（insula），呈三角形岛状，位于外侧裂深面，被额、顶、颞叶所覆盖。岛叶的功能与<span class="function-desc">内脏感觉和运动</span>有关。刺激人的岛叶可以引起内脏运动改变，如唾液分泌增加、恶心、呕吐、胃肠蠕动增加和产生饱胀感等。岛叶损害多引起<span class="lesion-symptom">内脏运动和感觉的障碍</span>。
+        </p>
+
+        <div class="divider-dot">· · ·</div>
+
+        <!-- （六）边缘叶 -->
+        <div class="sub-subsection-title">（六）边缘叶</div>
+        <p class="paragraph">
+            <span class="location">边缘叶（limbic lobe）</span>由半球内侧面位于胼胝体周围和侧脑室下角底壁的一圆弧形结构构成，包括隔区、扣带回、海马回、海马旁回和钩回。边缘叶与杏仁核、丘脑前核、下丘脑、中脑被盖、岛叶前部、额叶眶面等结构共同组成<span class="func-name">边缘系统</span>。边缘系统与<span class="function-desc">网状结构和大脑皮质有广泛联系</span>，参与<span class="function-desc">高级神经、精神（情绪和记忆等）和内脏的活动</span>。边缘系统损害时可出现<span class="lesion-symptom">情绪及记忆障碍、行为异常、幻觉、反应迟钝等精神障碍及内脏活动障碍</span>。
+        </p>
+
+        <div class="divider-dot">· · · · · ·</div>
+    </div>
+</body>
+</html>
