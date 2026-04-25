@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神经系统疾病定位诊断 · 脑干 & 小脑 · 手账笔记</title>
+    <style>
+        :root {
+            --paper: #f6f2ea;
+            --text: #3d3226;
+            --title: #4a2c17;
+            --func-name: #2c3e6b;
+            --func-name-bg: #e8ecf4;
+            --location-marker: #ffeb99;
+            --function-underline: #c4956a;
+            --lesion-area: #8b1a1a;
+            --lesion-area-bg: #fce8e6;
+            --lesion-symptom-underline: #c47a4a;
+            --divider: #d9ccb8;
+            --border-soft: #e3d9c8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #e8e0d3;
+            background-image: radial-gradient(ellipse at 20% 10%, rgba(180, 160, 140, 0.15) 0%, transparent 60%), radial-gradient(ellipse at 75% 60%, rgba(160, 140, 120, 0.1) 0%, transparent 50%);
+            font-family: "Noto Sans SC", "PingFang SC", "Helvetica Neue", "Segoe UI", "Arial", sans-serif;
+            display: flex; justify-content: center; padding: 2rem 1rem 4rem; min-height: 100vh; color: var(--text); line-height: 1.85; letter-spacing: 0.02em;
+        }
+        .notebook {
+            max-width: 780px; width: 100%; background: var(--paper);
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(180, 160, 140, 0.12) 31px, rgba(180, 160, 140, 0.12) 32px), linear-gradient(to bottom, rgba(255, 252, 245, 0.6) 0%, var(--paper) 8%);
+            border-radius: 6px; padding: 3rem 2.5rem 3.5rem;
+            box-shadow: 0 2px 20px rgba(80, 50, 30, 0.10), 0 8px 40px rgba(80, 50, 30, 0.06), inset 0 0 0 1px rgba(200, 180, 150, 0.25);
+            position: relative; border-left: 6px solid #d4c4aa; border-right: 1px solid rgba(180, 150, 120, 0.2);
+        }
+        .notebook::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, #c4a882, #d9bfa0, #c4a882); border-radius: 6px 6px 0 0; opacity: 0.7; }
+        .main-title { font-size: 1.6rem; font-weight: 700; color: var(--title); letter-spacing: 0.06em; text-align: center; margin-bottom: 0.4rem; padding-bottom: 0.6rem; border-bottom: 2px dotted var(--divider); }
+        .main-subtitle { text-align: center; font-size: 0.85rem; color: #8b7355; letter-spacing: 0.08em; margin-bottom: 2rem; font-weight: 400; }
+        .section-title { font-size: 1.25rem; font-weight: 700; color: #3d2613; margin-top: 2.2rem; margin-bottom: 0.8rem; padding-left: 0.6rem; border-left: 4px solid #c4a070; letter-spacing: 0.04em; }
+        .subsection-title { font-size: 1.08rem; font-weight: 700; color: #4d2f18; margin-top: 1.6rem; margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1.5px dashed #d9c8ad; letter-spacing: 0.03em; }
+        .sub-subsection-title { font-size: 1rem; font-weight: 700; color: #5a3822; margin-top: 1.2rem; margin-bottom: 0.4rem; }
+        .struct-label { display: inline-block; font-size: 0.8rem; font-weight: 700; color: #6b5a3e; background: #f0e8d8; padding: 0.15rem 0.7rem; border-radius: 3px; letter-spacing: 0.05em; margin-top: 0.8rem; margin-bottom: 0.5rem; border: 1px solid #e0d3ba; }
+        .lesion-label { display: inline-block; font-size: 0.8rem; font-weight: 700; color: #7a3a2a; background: #fceee8; padding: 0.15rem 0.7rem; border-radius: 3px; letter-spacing: 0.05em; margin-top: 0.8rem; margin-bottom: 0.5rem; border: 1px solid #e8ccbf; }
+        .func-name { font-weight: 800; color: #1e3a5f; background: #e3e9f3; padding: 0.08rem 0.35rem; border-radius: 2px; letter-spacing: 0.03em; white-space: nowrap; }
+        .location { background: #ffeb99; padding: 0.06rem 0.3rem; border-radius: 2px; font-weight: 600; color: #3d2a0f; letter-spacing: 0.02em; box-shadow: 0 1px 3px rgba(200, 170, 80, 0.2); white-space: nowrap; }
+        .function-desc { border-bottom: 2.5px solid #c4956a; padding-bottom: 0.08rem; color: #4a3020; font-weight: 500; letter-spacing: 0.01em; text-decoration: none; }
+        .lesion-area { font-weight: 800; color: #8b1a1a; background: #fde6e0; padding: 0.08rem 0.4rem; border-radius: 2px; letter-spacing: 0.03em; white-space: nowrap; border: 1px solid #f0c8ba; }
+        .lesion-symptom { border-bottom: 2px dashed #c47a4a; padding-bottom: 0.06rem; color: #5a3020; font-weight: 500; letter-spacing: 0.01em; text-decoration: none; }
+        .paragraph { margin-bottom: 0.7rem; text-indent: 2em; color: var(--text); font-size: 0.95rem; }
+        .paragraph-no-indent { margin-bottom: 0.7rem; color: var(--text); font-size: 0.95rem; }
+        .list-item { margin-bottom: 0.55rem; padding-left: 1.6em; position: relative; color: var(--text); font-size: 0.93rem; }
+        .list-item::before { content: '○'; position: absolute; left: 0.2em; top: 0; color: #b89570; font-size: 0.7rem; line-height: 2.2; }
+        .list-item-sub { margin-bottom: 0.4rem; padding-left: 2.8em; position: relative; color: var(--text); font-size: 0.9rem; }
+        .list-item-sub::before { content: '—'; position: absolute; left: 0.8em; top: 0; color: #b89570; font-size: 0.7rem; line-height: 2.3; }
+        .nest-num { font-weight: 700; color: #6b4d30; margin-right: 0.3em; }
+        .divider-dot { text-align: center; margin: 1.8rem 0 1.2rem; color: #c8b898; font-size: 0.7rem; letter-spacing: 0.4em; user-select: none; }
+        .small-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; color: #6b4d30; background: #f0e6d3; padding: 0.1rem 0.5rem; border-radius: 10px; letter-spacing: 0.04em; margin-right: 0.3em; border: 1px solid #e0d2b8; }
+        .highlight-box { background: #fffef9; border: 1.5px dashed #d9c8a8; border-radius: 4px; padding: 1rem 1.3rem; margin: 1rem 0; position: relative; }
+        .highlight-box::before { content: '✦'; position: absolute; top: -0.7rem; left: 1rem; color: #c4a070; font-size: 0.8rem; background: #fffef9; padding: 0 0.4rem; }
+        @media (max-width: 600px) {
+            .notebook { padding: 2rem 1.2rem 2.5rem; border-left-width: 4px; border-radius: 0; }
+            .main-title { font-size: 1.3rem; }
+            .paragraph { text-indent: 1.4em; font-size: 0.88rem; }
+            .func-name, .lesion-area, .location { white-space: normal; }
+        }
+    </style>
+</head>
+<body>
+<div class="notebook">
+
+    <div class="main-title">神经系统疾病 · 定位诊断笔记</div>
+    <div class="main-subtitle">《神经病学 第9版》· 脑干 · 小脑</div>
+
+    <!-- 五、脑干 -->
+    <div class="subsection-title">五、脑干</div>
+    <p class="paragraph">
+        <span class="location">脑干（brain stem）</span>上与间脑相连，下与脊髓相连，包括<span class="func-name">中脑</span>、<span class="func-name">脑桥</span>和<span class="func-name">延髓</span>。内部结构主要有神经核、上下行传导束和网状结构。
+    </p>
+
+    <span class="struct-label">【解剖结构与生理功能】</span>
+    <p class="list-item">
+        <span class="nest-num">1.</span> <span class="func-name">脑干神经核</span> 为脑干内的灰质核团。中脑有第Ⅲ、Ⅳ对脑神经的核团；脑桥有第Ⅴ、Ⅵ、Ⅶ、Ⅷ对脑神经的核团；延髓有第Ⅸ、Ⅹ、Ⅺ、Ⅻ对脑神经的核团。除上述脑神经核以外还有传导深感觉的中继核（<span class="func-name">薄束核</span>和<span class="func-name">楔束核</span>）及与锥体外系有关的<span class="func-name">红核</span>和<span class="func-name">黑质</span>等。
+    </p>
+    <p class="list-item">
+        <span class="nest-num">2.</span> <span class="func-name">脑干传导束</span> 为脑干内的白质，包括<span class="function-desc">深浅感觉传导束、锥体束、锥体外通路及内侧纵束</span>等。
+    </p>
+    <p class="list-item">
+        <span class="nest-num">3.</span> <span class="func-name">脑干网状结构</span> 脑干中轴内呈弥散分布的胞体和纤维交错排列的“网状”区域，称<span class="location">网状结构（reticular formation）</span>，其中细胞集中的地方称为网状核，与<span class="function-desc">大脑皮质、间脑、脑干、小脑、边缘系统及脊髓均有密切而广泛的联系</span>。在脑干网状结构中有许多神经调节中枢，如<span class="function-desc">心血管运动中枢、血压反射中枢、呼吸中枢及呕吐中枢</span>等。网状结构的一些核团接受各种信息，又传至丘脑，经丘脑非特异性核团中继后传至大脑皮质的广泛区域，以<span class="function-desc">维持人的意识清醒，因此被称为上行网状激活系统</span>。如网状结构受损，可出现意识障碍。
+    </p>
+
+    <span class="lesion-label">【病损表现与定位诊断】</span>
+    <p class="paragraph-no-indent">
+        脑干病变大都出现<span class="lesion-symptom">交叉性瘫痪</span>，即<span class="lesion-symptom">病灶侧脑神经周围性瘫痪和对侧肢体中枢性瘫痪及感觉障碍</span>。病变水平的高低可依受损脑神经进行定位，如第Ⅲ、Ⅳ对脑神经麻痹则病灶在中脑，第Ⅴ、Ⅵ、Ⅶ、Ⅷ对脑神经麻痹则病灶在脑桥，第Ⅸ、Ⅹ、Ⅺ、Ⅻ对脑神经麻痹则病灶在延髓。脑干病变多见于血管病、肿瘤和中枢脱髓鞘病变等。
+    </p>
+
+    <div class="sub-subsection-title">1. 延髓（medulla oblongata）</div>
+    <p class="list-item-sub">
+        <span class="nest-num">（1）</span><span class="lesion-area">延髓上段的背外侧区病变</span>：可出现<span class="lesion-area">延髓背外侧综合征</span>，又称<span class="lesion-area">瓦伦贝格综合征（Wallenberg syndrome）</span>。主要表现为：①<span class="lesion-symptom">眩晕、恶心、呕吐及眼震（前庭神经核损害）</span>；②<span class="lesion-symptom">病灶侧软腭、咽喉肌瘫痪，表现为吞咽困难、构音障碍、同侧软腭低垂及咽反射消失（疑核及舌咽、迷走神经损害）</span>；③<span class="lesion-symptom">病灶侧共济失调（绳状体及脊髓小脑束、部分小脑半球损害）</span>；④<span class="lesion-symptom">病灶侧霍纳（Horner）综合征（交感神经下行纤维损害）</span>；⑤<span class="lesion-symptom">交叉性感觉障碍，即同侧面部痛、温觉缺失（三叉神经脊束核损害），对侧偏身痛、温觉减退或丧失（脊髓丘脑侧束损害）</span>。常见于小脑下后动脉、椎-基底动脉或外侧延髓动脉缺血性损害。
+    </p>
+    <p class="list-item-sub">
+        <span class="nest-num">（2）</span><span class="lesion-area">延髓中腹侧损害</span>：可出现<span class="lesion-area">延髓内侧综合征</span>，又称<span class="lesion-area">德热里纳综合征（Dejerine syndrome）</span>。主要表现为：①<span class="lesion-symptom">病灶侧舌肌瘫痪及肌肉萎缩（舌下神经损害）</span>；②<span class="lesion-symptom">对侧肢体中枢性瘫痪（锥体束损害）</span>；③<span class="lesion-symptom">对侧肢体触觉、位置觉、振动觉减退或丧失（内侧丘系损害）</span>。可见于椎动脉及其分支或基底动脉后部血管阻塞。
+    </p>
+
+    <div class="sub-subsection-title">2. 脑桥（pons）</div>
+    <p class="list-item-sub">
+        <span class="nest-num">（1）</span><span class="lesion-area">脑桥腹外侧部损害</span>：可出现<span class="lesion-area">脑桥腹外侧部综合征</span>，又称<span class="lesion-area">米亚尔-居布勒综合征（Millard-Gubler syndrome）</span>，主要累及展神经、面神经、锥体束、脊髓丘脑束和内侧丘系。主要表现为：①<span class="lesion-symptom">病灶侧眼球不能外展（展神经麻痹）及周围性面神经麻痹（面神经核损害）</span>；②<span class="lesion-symptom">对侧中枢性偏瘫（锥体束损害）</span>；③<span class="lesion-symptom">对侧偏身感觉障碍（内侧丘系和脊髓丘脑束损害）</span>。多见于小脑下前动脉阻塞。
+    </p>
+    <p class="list-item-sub">
+        <span class="nest-num">（2）</span><span class="lesion-area">脑桥腹内侧部损害</span>：可出现<span class="lesion-area">脑桥腹内侧综合征</span>，又称<span class="lesion-area">福维尔综合征（Foville syndrome）</span>。主要累及展神经、面神经、脑桥侧视中枢、内侧纵束、锥体束。主要表现为：①<span class="lesion-symptom">病灶侧眼球不能外展（展神经麻痹）及周围性面神经麻痹（面神经核损害）</span>；②<span class="lesion-symptom">双眼向病灶对侧凝视（脑桥侧视中枢及内侧纵束损害）</span>；③<span class="lesion-symptom">对侧中枢性偏瘫（锥体束损害）</span>。多见于脑桥旁正中动脉阻塞。
+    </p>
+    <p class="list-item-sub">
+        <span class="nest-num">（3）</span><span class="lesion-area">脑桥背外侧部损害</span>：可出现<span class="lesion-area">脑桥被盖下部综合征</span>，又称<span class="lesion-area">雷蒙-塞斯唐综合征（Raymond-Cestan syndrome）</span>，累及前庭神经核、展神经核、面神经核、内侧纵束、小脑中脚、小脑下脚、脊髓丘脑侧束和内侧丘系，见于小脑上动脉或小脑下前动脉阻塞，又称小脑上动脉综合征。表现为：①<span class="lesion-symptom">眩晕、恶心、呕吐、眼球震颤（前庭神经核损害）</span>；②<span class="lesion-symptom">病灶侧眼球不能外展（展神经损害）</span>；③<span class="lesion-symptom">病灶侧面肌麻痹（面神经核损害）</span>；④<span class="lesion-symptom">双眼病灶侧注视不能（脑桥侧视中枢及内侧纵束损害）</span>；⑤<span class="lesion-symptom">交叉性感觉障碍，即同侧面部痛、温觉缺失（三叉神经脊束损害），对侧偏身痛、温觉减退或丧失（脊髓丘脑侧束损害）</span>；⑥<span class="lesion-symptom">对侧偏身触觉、位置觉、振动觉减退或丧失（内侧丘系损害）</span>；⑦<span class="lesion-symptom">病灶侧Horner综合征（交感神经下行纤维损害）</span>；⑧<span class="lesion-symptom">病灶侧偏身共济失调（小脑中脚、小脑下脚和脊髓小脑前束损害）</span>。
+    </p>
+    <p class="list-item-sub">
+        <span class="nest-num">（4）</span><span class="lesion-area">双侧脑桥基底部病变</span>：可出现<span class="lesion-area">闭锁综合征（locked-in syndrome）</span>，又称去传出状态，主要见于基底动脉脑桥分支双侧闭塞。患者大脑半球和脑干被盖部网状激活系统无损害，<span class="lesion-symptom">意识清醒，语言理解无障碍，出现双侧中枢性瘫痪（双侧皮质脊髓束和支配三叉神经以下的皮质脑干束受损），只能以眼球上下运动示意（动眼神经与滑车神经功能保留），眼球水平运动障碍，不能讲话，双侧面瘫，构音及吞咽运动均障碍，不能转颈耸肩，四肢全瘫，可有双侧病理反射阳性</span>，常被误认为昏迷。脑电图正常或有轻度慢波有助于和真性意识障碍区别。
+    </p>
+
+    <div class="sub-subsection-title">3. 中脑（midbrain）</div>
+    <p class="list-item-sub">
+        <span class="nest-num">（1）</span><span class="lesion-area">一侧中脑大脑脚脚底损害</span>：可出现<span class="lesion-area">大脑脚综合征</span>，又称<span class="lesion-area">韦伯综合征（Weber syndrome）</span>，因其损伤动眼神经和锥体束，故也称动眼神经交叉瘫综合征，多见于小脑幕裂孔疝。表现为：①<span class="lesion-symptom">病灶侧除外直肌和上斜肌外的所有眼肌麻痹，瞳孔散大（动眼神经麻痹）</span>；②<span class="lesion-symptom">对侧中枢性面舌瘫和上下肢瘫痪（锥体束损害）</span>。
+    </p>
+    <p class="list-item-sub">
+        <span class="nest-num">（2）</span><span class="lesion-area">中脑被盖腹内侧部损害</span>：可出现<span class="lesion-area">红核综合征</span>，又称<span class="lesion-area">贝内迪克特综合征（Benedikt syndrome）</span>，侵犯动眼神经、红核、黑质和内侧丘系，而锥体束未受影响。表现为：①<span class="lesion-symptom">病灶侧除外直肌和上斜肌外的所有眼肌麻痹，瞳孔散大（动眼神经麻痹）</span>；②<span class="lesion-symptom">对侧肢体震颤、强直（黑质损害）或舞蹈、手足徐动及共济失调（红核损害）</span>；③<span class="lesion-symptom">对侧肢体深感觉和精细触觉障碍（内侧丘系损害）</span>。
+    </p>
+
+    <div class="divider-dot">· · · · · ·</div>
+
+    <!-- 六、小脑 -->
+    <div class="subsection-title">六、小脑</div>
+    <span class="struct-label">【解剖结构与生理功能】</span>
+    <p class="paragraph">
+        <span class="location">小脑（cerebellum）</span>位于颅后窝，小脑幕下方，脑桥及延髓的背侧。上方借小脑幕与枕叶隔开，下方为小脑延髓池，腹侧为脑桥和延髓，其间为第四脑室。小脑以<span class="func-name">小脑下脚（绳状体）</span>、<span class="func-name">中脚（脑桥臂）</span>、<span class="func-name">上脚（结合臂）</span>分别与延髓、脑桥及中脑相连。
+    </p>
+
+    <p class="list-item">
+        <span class="nest-num">1.</span> <span class="func-name">小脑的结构</span> 小脑的中央为<span class="location">小脑蚓部</span>，两侧为<span class="location">小脑半球</span>。根据小脑表面的沟和裂，小脑分为三个主叶，即<span class="func-name">绒球小结叶</span>、<span class="func-name">前叶</span>和<span class="func-name">后叶</span>。小脑表面覆以灰质（小脑皮质），由分子层、浦肯野（Purkinje）细胞层和颗粒层三层组成。皮质下为白质（小脑髓质）。在两侧小脑半球白质内各有四个小脑核，由内向外依次为<span class="func-name">顶核</span>、<span class="func-name">球状核</span>、<span class="func-name">栓状核</span>和<span class="func-name">齿状核</span>。顶核在发生学上最为古老，齿状核是四个核团中最大的一个。
+    </p>
+    <p class="list-item">
+        <span class="nest-num">2.</span> <span class="func-name">小脑的纤维及联系</span> 小脑系统的纤维联系分传入和传出两组。
+    </p>
+    <p class="paragraph-no-indent"><span class="small-tag">传入纤维</span>小脑的传入纤维来自大脑皮质、脑干（前庭核、网状结构及下橄榄核等）和脊髓，组成了<span class="func-name">脊髓小脑束</span>、<span class="func-name">前庭小脑束</span>、<span class="func-name">脑桥小脑束</span>和<span class="func-name">橄榄小脑束</span>等。所有传入小脑的冲动均通过小脑的3个脚而进入小脑，终止于小脑皮质和深部核团。①<span class="func-name">脊髓小脑束</span>：<span class="function-desc">肌腱、关节的深感觉由脊髓小脑前、后束分别经小脑上脚和小脑下脚传至小脑蚓部</span>；②<span class="func-name">前庭小脑束</span>：<span class="function-desc">将前庭细胞核发出的冲动经小脑下脚传入同侧绒球小结叶及顶核</span>；③<span class="func-name">脑桥小脑束</span>：<span class="function-desc">大脑皮质额中回、颞中下回或枕叶的冲动传至同侧脑桥核，再组成脑桥小脑束交叉到对侧，经小脑中脚至对侧小脑皮质</span>；④<span class="func-name">橄榄小脑束</span>：<span class="function-desc">将对侧下橄榄核的冲动经小脑中脚传至小脑皮质</span>。</p>
+    <p class="paragraph-no-indent"><span class="small-tag">传出纤维</span>小脑的传出纤维发自小脑深部核团（主要是<span class="func-name">齿状核</span>、<span class="func-name">顶核</span>），经过<span class="location">小脑上脚（结合臂）</span>离开小脑，再经过中间神经元（前庭外侧核、红核、脑干的网状核和丘脑核团）到达脑干的脑神经核及脊髓前角细胞。主要有：①<span class="func-name">齿状核红核脊髓束</span>：<span class="function-desc">自齿状核发出的纤维交叉后至对侧红核，再组成红核脊髓束后交叉至同侧脊髓前角，参与运动的调节</span>；②<span class="func-name">齿状核红核丘脑束</span>：<span class="function-desc">自齿状核发出的纤维交叉后至对侧红核，再至丘脑，上传至大脑皮质运动区及运动前区，参与锥体束及锥体外系的调节</span>；③<span class="func-name">顶核脊髓束</span>：<span class="function-desc">小脑顶核发出的纤维经小脑下脚至延髓网状结构和前庭核，一方面经网状脊髓束和前庭脊髓束至脊髓前角细胞，参与运动的调节，另一方面经前庭核与内侧纵束和眼肌神经核联系，参与眼球运动的调节</span>。</p>
+    <p class="list-item">
+        <span class="nest-num">3.</span> <span class="func-name">小脑的功能</span> 小脑主要<span class="function-desc">维持躯体平衡，控制姿势和步态，调节肌张力和协调随意运动的准确性</span>。小脑的传出纤维在传导过程中有2次交叉，对躯体活动发挥<span class="function-desc">同侧协调</span>作用，并有躯体各部位的代表区，如<span class="location">小脑半球</span>为四肢的代表区，其上半部分代表上肢，下半部分代表下肢，<span class="location">蚓部</span>则是躯干代表区。
+    </p>
+
+    <span class="lesion-label">【病损表现与定位诊断】</span>
+    <p class="paragraph-no-indent">
+        小脑病变最主要的症状为<span class="lesion-symptom">共济失调</span>。
+    </p>
+    <p class="paragraph-no-indent">
+        此外，小脑占位性病变压迫脑干可发生阵发性强直性惊厥，或出现去大脑强直状态，表现为四肢强直、角弓反张、神志不清，称<span class="lesion-area">小脑发作</span>。
+    </p>
+    <p class="paragraph-no-indent">
+        小脑蚓部和半球损害时可产生不同症状：①<span class="lesion-area">小脑蚓部损害</span>：出现<span class="lesion-symptom">躯干共济失调，即轴性平衡障碍。表现为躯干不能保持直立姿势、站立不稳及向前或向后倾倒。行走时两脚分开、步态蹒跚、左右摇晃，呈醉酒步态</span>。与深感觉障碍性共济失调不同，此种共济失调并不能通过睁眼改善，但肢体共济失调及眼震很轻或不明显，肌张力常正常，言语障碍常不明显。多见于儿童小脑蚓部的髓母细胞瘤等。②<span class="lesion-area">小脑半球损害</span>：一侧小脑半球病变时表现为<span class="lesion-symptom">同侧肢体共济失调，上肢比下肢重，远端比近端重，精细动作比粗略动作重，指鼻试验、跟-膝-胫试验、轮替动作表现笨拙，常有水平性或旋转性眼球震颤，眼球向病灶侧注视时震颤更加粗大，往往出现小脑性语言</span>。多见于小脑半球脓肿、肿瘤、脑血管病、遗传变性疾病等。
+    </p>
+    <p class="paragraph">
+        小脑慢性弥漫性变性时，蚓部和小脑半球虽同样受损，但临床上多只表现躯干性和言语的共济失调，四肢共济失调不明显，这是由新小脑的代偿作用所致。急性病变则缺少这种代偿作用，故可出现明显的四肢共济失调。
+    </p>
+
+    <div class="divider-dot">· · · · · ·</div>
+    <p style="text-align:right;font-size:0.7rem;color:#b8a48c;letter-spacing:0.05em;margin-top:1.5rem;">
+        — 手账笔记 · 脑干 · 小脑 —
+    </p>
+</div>
+</body>
+</html>

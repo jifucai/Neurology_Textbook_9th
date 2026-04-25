@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神经系统疾病定位诊断 · 脊髓 · 手账笔记</title>
+    <style>
+        :root {
+            --paper: #f6f2ea;
+            --text: #3d3226;
+            --title: #4a2c17;
+            --func-name: #2c3e6b;
+            --func-name-bg: #e8ecf4;
+            --location-marker: #ffeb99;
+            --function-underline: #c4956a;
+            --lesion-area: #8b1a1a;
+            --lesion-area-bg: #fce8e6;
+            --lesion-symptom-underline: #c47a4a;
+            --divider: #d9ccb8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #e8e0d3;
+            background-image: radial-gradient(ellipse at 20% 10%, rgba(180, 160, 140, 0.15) 0%, transparent 60%), radial-gradient(ellipse at 75% 60%, rgba(160, 140, 120, 0.1) 0%, transparent 50%);
+            font-family: "Noto Sans SC", "PingFang SC", "Helvetica Neue", "Segoe UI", "Arial", sans-serif;
+            display: flex; justify-content: center; padding: 2rem 1rem 4rem; min-height: 100vh; color: var(--text); line-height: 1.85; letter-spacing: 0.02em;
+        }
+        .notebook {
+            max-width: 780px; width: 100%; background: var(--paper);
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(180, 160, 140, 0.12) 31px, rgba(180, 160, 140, 0.12) 32px), linear-gradient(to bottom, rgba(255, 252, 245, 0.6) 0%, var(--paper) 8%);
+            border-radius: 6px; padding: 3rem 2.5rem 3.5rem;
+            box-shadow: 0 2px 20px rgba(80, 50, 30, 0.10), 0 8px 40px rgba(80, 50, 30, 0.06), inset 0 0 0 1px rgba(200, 180, 150, 0.25);
+            position: relative; border-left: 6px solid #d4c4aa; border-right: 1px solid rgba(180, 150, 120, 0.2);
+        }
+        .notebook::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(to right, #c4a882, #d9bfa0, #c4a882); border-radius: 6px 6px 0 0; opacity: 0.7; }
+        .main-title { font-size: 1.6rem; font-weight: 700; color: var(--title); letter-spacing: 0.06em; text-align: center; margin-bottom: 0.4rem; padding-bottom: 0.6rem; border-bottom: 2px dotted var(--divider); }
+        .main-subtitle { text-align: center; font-size: 0.85rem; color: #8b7355; letter-spacing: 0.08em; margin-bottom: 2rem; font-weight: 400; }
+        .section-title { font-size: 1.25rem; font-weight: 700; color: #3d2613; margin-top: 2.2rem; margin-bottom: 0.8rem; padding-left: 0.6rem; border-left: 4px solid #c4a070; letter-spacing: 0.04em; }
+        .subsection-title { font-size: 1.08rem; font-weight: 700; color: #4d2f18; margin-top: 1.6rem; margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1.5px dashed #d9c8ad; letter-spacing: 0.03em; }
+        .sub-subsection-title { font-size: 1rem; font-weight: 700; color: #5a3822; margin-top: 1.2rem; margin-bottom: 0.4rem; }
+        .struct-label { display: inline-block; font-size: 0.8rem; font-weight: 700; color: #6b5a3e; background: #f0e8d8; padding: 0.15rem 0.7rem; border-radius: 3px; letter-spacing: 0.05em; margin-top: 0.8rem; margin-bottom: 0.5rem; border: 1px solid #e0d3ba; }
+        .lesion-label { display: inline-block; font-size: 0.8rem; font-weight: 700; color: #7a3a2a; background: #fceee8; padding: 0.15rem 0.7rem; border-radius: 3px; letter-spacing: 0.05em; margin-top: 0.8rem; margin-bottom: 0.5rem; border: 1px solid #e8ccbf; }
+        .func-name { font-weight: 800; color: #1e3a5f; background: #e3e9f3; padding: 0.08rem 0.35rem; border-radius: 2px; letter-spacing: 0.03em; white-space: nowrap; }
+        .location { background: #ffeb99; padding: 0.06rem 0.3rem; border-radius: 2px; font-weight: 600; color: #3d2a0f; letter-spacing: 0.02em; box-shadow: 0 1px 3px rgba(200, 170, 80, 0.2); white-space: nowrap; }
+        .function-desc { border-bottom: 2.5px solid #c4956a; padding-bottom: 0.08rem; color: #4a3020; font-weight: 500; letter-spacing: 0.01em; text-decoration: none; }
+        .lesion-area { font-weight: 800; color: #8b1a1a; background: #fde6e0; padding: 0.08rem 0.4rem; border-radius: 2px; letter-spacing: 0.03em; white-space: nowrap; border: 1px solid #f0c8ba; }
+        .lesion-symptom { border-bottom: 2px dashed #c47a4a; padding-bottom: 0.06rem; color: #5a3020; font-weight: 500; letter-spacing: 0.01em; text-decoration: none; }
+        .paragraph { margin-bottom: 0.7rem; text-indent: 2em; color: var(--text); font-size: 0.95rem; }
+        .paragraph-no-indent { margin-bottom: 0.7rem; color: var(--text); font-size: 0.95rem; }
+        .list-item { margin-bottom: 0.55rem; padding-left: 1.6em; position: relative; color: var(--text); font-size: 0.93rem; }
+        .list-item::before { content: '○'; position: absolute; left: 0.2em; top: 0; color: #b89570; font-size: 0.7rem; line-height: 2.2; }
+        .list-item-sub { margin-bottom: 0.4rem; padding-left: 2.8em; position: relative; color: var(--text); font-size: 0.9rem; }
+        .list-item-sub::before { content: '—'; position: absolute; left: 0.8em; top: 0; color: #b89570; font-size: 0.7rem; line-height: 2.3; }
+        .nest-num { font-weight: 700; color: #6b4d30; margin-right: 0.3em; }
+        .divider-dot { text-align: center; margin: 1.8rem 0 1.2rem; color: #c8b898; font-size: 0.7rem; letter-spacing: 0.4em; user-select: none; }
+        .small-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; color: #6b4d30; background: #f0e6d3; padding: 0.1rem 0.5rem; border-radius: 10px; letter-spacing: 0.04em; margin-right: 0.3em; border: 1px solid #e0d2b8; }
+        .highlight-box { background: #fffef9; border: 1.5px dashed #d9c8a8; border-radius: 4px; padding: 1rem 1.3rem; margin: 1rem 0; position: relative; }
+        .highlight-box::before { content: '✦'; position: absolute; top: -0.7rem; left: 1rem; color: #c4a070; font-size: 0.8rem; background: #fffef9; padding: 0 0.4rem; }
+        @media (max-width: 600px) {
+            .notebook { padding: 2rem 1.2rem 2.5rem; border-left-width: 4px; border-radius: 0; }
+            .main-title { font-size: 1.3rem; }
+            .paragraph { text-indent: 1.4em; font-size: 0.88rem; }
+            .func-name, .lesion-area, .location { white-space: normal; }
+        }
+    </style>
+</head>
+<body>
+<div class="notebook">
+
+    <div class="main-title">神经系统疾病 · 定位诊断笔记</div>
+    <div class="main-subtitle">《神经病学 第9版》· 脊髓</div>
+
+    <!-- 七、脊髓 -->
+    <div class="subsection-title">七、脊髓</div>
+
+    <span class="struct-label">【解剖结构与生理功能】</span>
+    <p class="paragraph">
+        <span class="location">脊髓（spinal cord）</span>呈微扁圆柱体，位于椎管内，为脑干向下延伸部分。脊髓由含有神经细胞的灰质和含上、下行传导束的白质组成。脊髓发出31对脊神经分布到四肢和躯干；同时也是神经系统的初级反射中枢。正常的脊髓活动是在大脑的控制下完成的。
+    </p>
+
+    <div class="sub-subsection-title">1. 脊髓外部结构</div>
+    <p class="paragraph">
+        脊髓是中枢神经系统组成部分之一，是脑干向下延伸的部分，全长42～45cm，上端于枕骨大孔处与延髓相接，下端至第一腰椎下缘，占据椎管的上2/3。脊髓自上而下发出31对脊神经，与此相对应，脊髓也分为31个节段，即8个颈节（C₁～C₈），12个胸节（T₁～T₁₂），5个腰节（L₁～L₅），5个骶节（S₁～S₅）和1个尾节（Co）。每个节段有两对神经根——前根和后根。在发育过程中，脊髓的生长较脊柱生长慢，因此到成人时，脊髓比脊柱短，其下端位置比相应脊椎高。颈髓节段较颈椎高1个椎骨；上中段胸髓较相应的胸椎高2个椎骨，下胸髓则高出3个椎骨；腰髓位于第10～12胸椎；骶髓位于第12胸椎和第1腰椎水平。由于脊髓和脊柱长度不等，神经根由相应椎间孔穿出椎管时，越下位脊髓节段的神经根越向下倾斜，腰段的神经根几乎垂直下降，形成<span class="func-name">马尾</span>，马尾由L₂至尾节10对神经根组成。
+    </p>
+    <p class="paragraph">
+        脊髓呈前后稍扁的圆柱形。全长粗细不等，有两个膨大部，<span class="location">颈膨大</span>为C₅～T₂，发出支配上肢的神经根。<span class="location">腰膨大</span>为L₁～S₂，发出支配下肢的神经根。脊髓自腰膨大向下逐渐变细，形成<span class="func-name">脊髓圆锥</span>，圆锥尖端发出终丝，终止于第1尾椎的骨膜。
+    </p>
+    <p class="paragraph">
+        脊髓表面有6条纵行的沟裂，<span class="location">前正中裂</span>深达脊髓前后径的1/3，<span class="location">后正中裂</span>将后索分为对称的左右两部分，<span class="location">前外侧沟</span>与<span class="location">后外侧沟</span>左右各一，脊神经前根由前外侧沟离开脊髓，后根由后外侧沟进入脊髓。
+    </p>
+    <p class="paragraph">
+        与脑膜相对应的脊髓膜，分为三层，最外层为<span class="func-name">硬脊膜</span>，是硬脑膜在椎管内的延续，在骶髓节段水平，硬脊膜形成盲端；硬脊膜下面是一层薄而透明的<span class="func-name">蛛网膜</span>；最内层为富有血管的薄膜，称为<span class="func-name">软脊膜</span>，紧包于脊髓的表面。硬脊膜外面与脊椎骨膜之间的间隙为<span class="location">硬膜外腔</span>，其中有静脉丛与脂肪组织；硬脊膜与蛛网膜之间为<span class="location">硬膜下腔</span>，其间无特殊结构；蛛网膜与软脊膜之间为<span class="location">蛛网膜下腔</span>，与脑的蛛网膜下腔相通，其间充满脑脊液。软脊膜包绕脊神经穿过蛛网膜附着于硬脊膜内面形成<span class="func-name">齿状韧带</span>，脊神经和齿状韧带对脊髓起固定作用。
+    </p>
+
+    <div class="sub-subsection-title">2. 脊髓内部结构</div>
+    <p class="paragraph">
+        脊髓由白质和灰质组成。灰质呈灰红色，主要由神经细胞核团和部分胶质细胞组成，横切面上呈蝴蝶形或“H”形居于脊髓中央，其中心有中央管；白质主要由上行、下行传导束及大量的胶质细胞组成，包绕在灰质的外周。
+    </p>
+    <p class="paragraph-no-indent"><span class="small-tag">（1）脊髓灰质</span>可分为前部的<span class="location">前角</span>、后部的<span class="location">后角</span>及C₈～L₂和S₂₋₄的<span class="location">侧角</span>。此外还包括中央管前后的<span class="func-name">灰质前连合</span>和<span class="func-name">灰质后连合</span>，它们合称中央灰质。灰质内含有各种不同大小、形态和功能的神经细胞，是脊髓接受和发出冲动的关键结构。<span class="func-name">前角</span>主要参与<span class="function-desc">躯干和四肢的运动支配</span>；<span class="func-name">后角</span>参与<span class="function-desc">感觉信息的中转</span>；C₈～L₂<span class="func-name">侧角</span>是<span class="function-desc">脊髓交感神经中枢，支配血管、内脏及腺体的活动</span>（其中，C₈～T₁侧角发出的交感纤维支配同侧的瞳孔扩大肌、脸板肌、眼眶肌、面部血管和汗腺），S₂₋₄侧角为<span class="function-desc">脊髓副交感神经中枢，支配膀胱、直肠和性腺</span>。</p>
+    <p class="paragraph-no-indent"><span class="small-tag">（2）脊髓白质</span>分为<span class="location">前索</span>、<span class="location">侧索</span>和<span class="location">后索</span>三部，前索位于前角及前根的内侧，侧索位于前后角之间，后索位于后正中裂与后角、后根之间。此外灰质前连合前方有<span class="func-name">白质前连合</span>，灰质后角基底部的灰白质相间的部分为网状结构。白质主要由上行（感觉）、下行（运动）传导束及大量的胶质细胞组成，上行纤维束将不同的感觉信息上传到脑，下行纤维束从脑的不同部位将神经冲动下传到脊髓。</p>
+    <p class="paragraph-no-indent"><strong>1）上行纤维束：</strong>又称感觉传导束，将躯干和四肢的痛、温觉，精细触觉和深感觉传至大脑皮质感觉中枢进行加工和整合。主要有：①<span class="func-name">薄束和楔束</span>：走行在<span class="location">后索</span>，<span class="function-desc">传导肌肉、肌腱、关节的深感觉（位置觉、运动觉和振动觉）和皮肤的精细触觉至延髓的薄束核和楔束核，进而传至大脑皮质</span>；②<span class="func-name">脊髓小脑束</span>：分前、后束，分别位于<span class="location">外侧索周边的前、后部</span>，<span class="function-desc">将下肢和躯干下部的深感觉信息经小脑上、下脚传至小脑皮质，与运动和姿势的调节有关</span>；③<span class="func-name">脊髓丘脑束</span>：可分为<span class="func-name">脊髓丘脑侧束</span>和<span class="func-name">脊髓丘脑前束</span>，分别走行于<span class="location">外侧索的前半部</span>和<span class="location">前索</span>，两束将后根的传入信息向上传至丘脑腹后外侧核（<span class="function-desc">侧束传导痛、温觉，前束传导触压觉</span>），进而传至中央后回和旁中央小叶后部进行整合，是感觉传导通路的重要部分。</p>
+    <p class="paragraph-no-indent"><strong>2）下行纤维束：</strong>又称运动传导束，将大脑皮质运动区、红核、前庭核、脑干网状结构及上丘的冲动传至脊髓前角或侧角，继而支配躯干肌和四肢肌，参与锥体束和锥体外系的形成，与肌肉的随意运动、姿势和平衡有关。主要有：①<span class="func-name">皮质脊髓束</span>：分<span class="func-name">皮质脊髓侧束</span>和<span class="func-name">皮质脊髓前束</span>，分别走行于<span class="location">脊髓侧索</span>和<span class="location">前索</span>，<span class="function-desc">将大脑皮质运动区的冲动传至脊髓前角的运动神经元，支配躯干和肢体的运动</span>；②<span class="func-name">红核脊髓束</span>：下行于<span class="location">脊髓的侧索</span>，<span class="function-desc">将红核发出的冲动传至脊髓前角，支配屈肌的运动神经元，协调肢体运动</span>；③<span class="func-name">前庭脊髓束</span>：走行于<span class="location">前索</span>，<span class="function-desc">将前庭外侧核发出的冲动传至脊髓中间带及前角底部，主要兴奋躯干和肢体的伸肌，以调节身体平衡</span>；④<span class="func-name">网状脊髓束</span>：走行于<span class="location">前索及外侧索</span>，<span class="function-desc">连接脑桥和延髓的网状结构与脊髓中间带神经元，主要参与躯干和肢体近端肌肉运动的控制</span>；⑤<span class="func-name">顶盖脊髓束</span>：在对侧<span class="location">前索</span>下行，<span class="function-desc">将中脑上丘的冲动传至上颈髓中间带及前角基底部，兴奋对侧颈肌及抑制同侧颈肌活动，是头颈反射及视听反射的结构基础</span>；⑥<span class="func-name">内侧纵束</span>：位于<span class="location">前索</span>，<span class="function-desc">将中脑及前庭神经核的冲动传至脊髓上颈段中间带，继而支配前角运动神经元，协同眼球的运动和头颈部的运动，是眼震和头眼反射的结构基础</span>。</p>
+
+    <div class="sub-subsection-title">3. 脊髓反射</div>
+    <p class="paragraph">
+        许多肌肉、腺体和内脏反射的初级中枢均在脊髓，脊髓对骨骼肌、腺体和内脏传入的刺激进行分析，通过联络神经元完成节段间与高级中枢的联系，支配骨骼肌、腺体的反射性活动。主要的脊髓反射有以下两种。
+    </p>
+    <p class="paragraph-no-indent"><span class="small-tag">（1）牵张反射</span>骨骼肌被牵引时，肌肉收缩，肌张力增高。当突然牵拉骨骼肌时，被牵拉的骨骼肌快速收缩，如膝反射。骨骼肌持续被牵拉，肌张力增高以维持身体的姿势即姿势反射。这两种反射弧径路大致相同。这种反射不仅有赖于完整的脊髓反射弧，还要受皮质脊髓束的抑制。如果皮质脊髓束的抑制作用被阻断，就会出现肌张力增高、腱反射亢进和病理反射阳性，这是锥体束损害的主要征象。</p>
+    <p class="paragraph-no-indent"><span class="small-tag">（2）屈曲反射</span>当肢体受到伤害性刺激时，屈肌会快速收缩，以逃避这种刺激。屈曲反射为一种防御反射。当屈肌活动时，牵张反射便被抑制，伸肌的肌张力降低。</p>
+
+    <div class="sub-subsection-title">4. 脊髓功能</div>
+    <p class="paragraph">
+        脊髓的功能主要表现在两方面：其一为<span class="function-desc">上、下行传导通路的中继站</span>，其二为<span class="function-desc">反射中枢</span>。脊髓中大量的神经细胞是各种感觉及运动的中转站，上、下行传导束在各种感觉及运动冲动的传导中起重要作用。此外，脊髓的独特功能即脊髓反射，分为躯体反射和内脏反射，前者指骨骼肌的反射活动，如牵张反射、屈曲反射和浅反射等，后者指一些躯体-内脏反射、内脏-内脏反射和内脏-躯体反射，如竖毛反射、膀胱排尿反射和直肠排便反射等。
+    </p>
+
+    <span class="lesion-label">【病损表现与定位诊断】</span>
+    <p class="paragraph-no-indent">
+        脊髓损害的临床表现主要为运动障碍、感觉障碍、反射异常及自主神经功能障碍，前两者对脊髓病变水平的定位很有帮助。
+    </p>
+
+    <div class="sub-subsection-title">1. 不完全性脊髓损害</div>
+    <p class="list-item-sub"><span class="nest-num">（1）</span><span class="lesion-area">前角损害</span>：呈<span class="lesion-symptom">节段性下运动神经元性瘫痪，表现为病变前角支配的肌肉萎缩，腱反射消失，无感觉障碍和病理反射，常伴有肌束震颤，肌电图出现巨大综合电位</span>。常见于进行性脊肌萎缩、脊髓前角灰质炎等疾病。</p>
+    <p class="list-item-sub"><span class="nest-num">（2）</span><span class="lesion-area">后角损害</span>：<span class="lesion-symptom">病灶侧相应皮节出现痛、温觉缺失而触觉保留的分离性感觉障碍</span>，常见于脊髓空洞症、早期髓内胶质瘤等疾病。</p>
+    <p class="list-item-sub"><span class="nest-num">（3）</span><span class="lesion-area">中央管附近的损害</span>：由于来自后角的痛、温觉纤维在白质前连合处交叉，该处病变产生<span class="lesion-symptom">双侧对称的分离性感觉障碍，痛、温觉减弱或消失，触觉保留</span>，常见于脊髓空洞症、脊髓中央管积水或出血等疾病。</p>
+    <p class="list-item-sub"><span class="nest-num">（4）</span><span class="lesion-area">侧角损害</span>：C₈～L₂侧角是脊髓交感神经中枢，其受损可出现<span class="lesion-symptom">血管舒缩功能障碍、泌汗障碍和营养障碍</span>等，C₈～T₁病变时会产生<span class="lesion-symptom">Horner综合征（眼裂缩小、眼球轻微内陷、瞳孔缩小或伴同侧面部少汗或无汗）</span>。S₂₋₄侧角为副交感中枢，其受损时可产生<span class="lesion-symptom">膀胱直肠功能障碍和性功能障碍</span>。</p>
+    <p class="list-item-sub"><span class="nest-num">（5）</span><span class="lesion-area">前索损害</span>：脊髓丘脑前束受损可造成<span class="lesion-symptom">对侧病变水平以下粗触觉障碍</span>，刺激性病变可引起<span class="lesion-symptom">病灶对侧水平以下发生难以形容的弥散性疼痛，常伴感觉过敏</span>。</p>
+    <p class="list-item-sub"><span class="nest-num">（6）</span><span class="lesion-area">后索损害</span>：薄束、楔束受损时可出现<span class="lesion-symptom">振动觉、位置觉障碍及感觉性共济失调</span>，患者由于精细触觉障碍而不能辨别在皮肤上书写的字和几何图形。后索刺激性病变时，在相应的支配区可出现<span class="lesion-symptom">电击样剧痛</span>。</p>
+    <p class="list-item-sub"><span class="nest-num">（7）</span><span class="lesion-area">侧索损害</span>：脊髓侧索损害导致<span class="lesion-symptom">肢体病变水平以下同侧上运动神经元性瘫痪和对侧痛、温觉障碍</span>。</p>
+    <p class="list-item-sub"><span class="nest-num">（8）</span><span class="lesion-area">脊髓束性损害</span>：以选择性侵犯脊髓内个别传导束为特点，薄束、楔束损害可见<span class="lesion-symptom">深感觉障碍</span>，锥体束损害可见<span class="lesion-symptom">中枢性瘫痪</span>，脊髓小脑束损害可见<span class="lesion-symptom">小脑性共济失调</span>。</p>
+    <p class="list-item-sub"><span class="nest-num">（9）</span><span class="lesion-area">脊髓半侧损害</span>：引起<span class="lesion-area">脊髓半切综合征</span>，又称<span class="lesion-area">布朗-塞卡综合征（Brown-Séquard syndrome）</span>，主要特点是<span class="lesion-symptom">病变节段以下同侧上运动神经元性瘫痪、深感觉障碍、精细触觉障碍、血管舒缩功能障碍，以及对侧痛、温觉障碍</span>。由于后角细胞发出的纤维先在同侧上升1～2个节段后再经白质前连合交叉至对侧组成脊髓丘脑束，故对侧传导束性感觉障碍平面较脊髓损害节段水平低。</p>
+
+    <div class="sub-subsection-title">2. 脊髓横贯性损害</div>
+    <p class="paragraph">
+        脊髓横贯性损害多见于急性脊髓炎及脊髓压迫症。主要症状为受损平面以下各种感觉缺失，上运动神经元性瘫痪及括约肌障碍等。急性期往往出现脊髓休克症状，包括损害平面以下弛缓性瘫痪、肌张力减低、腱反射减弱、病理反射阴性及尿潴留。一般持续2～4周后，反射活动逐渐恢复，转变为中枢性瘫痪，出现肌张力增高、反射亢进、病理征阳性和反射性排尿等。慢性压迫症状常因损害结构不同而症状各异。不同节段横贯性损害的临床表现如下。
+    </p>
+    <p class="list-item-sub"><span class="nest-num">（1）</span><span class="lesion-area">高颈髓（C₁₋₄）</span>：<span class="lesion-symptom">损害平面以下各种感觉缺失，四肢呈上运动神经元性瘫痪，括约肌障碍，四肢和躯干多无汗。常伴有枕部疼痛及头部活动受限。C₃₋₅节段受损将出现膈肌瘫痪，腹式呼吸减弱或消失。此外，如三叉神经脊束核受损，则出现同侧面部外侧痛、温觉减退或丧失；如副神经核受累则可见同侧胸锁乳突肌及斜方肌无力和萎缩；如病变由枕骨大孔波及颅后窝，可引起延髓及小脑症状，如吞咽困难、饮水呛咳、共济失调和眼球震颤等。</span></p>
+    <p class="list-item-sub"><span class="nest-num">（2）</span><span class="lesion-area">颈膨大（C₅～T₂）</span>：<span class="lesion-symptom">双上肢呈下运动神经元性瘫痪，双下肢呈上运动神经元性瘫痪。病灶平面以下各种感觉缺失，可有肩部和上肢的放射性痛、尿便障碍等。C₈～T₁节段侧角细胞受损可产生Horner综合征。上肢腱反射的改变有助于受损节段的定位，如肱二头肌反射减弱或消失而肱三头肌反射亢进，提示病损在C₅或C₆；肱二头肌反射正常而肱三头肌反射减弱或消失，提示病损在C₇。</span></p>
+    <p class="list-item-sub"><span class="nest-num">（3）</span><span class="lesion-area">胸髓（T₃～L₂）</span>：<span class="lesion-symptom">T₄₋₅脊髓节段是血供较差而最易发病的部位，一旦损害，该平面以下各种感觉缺失，双下肢呈上运动神经元性瘫痪，括约肌障碍，受损节段常伴有束带感。病变位于T₁₀₋₁₁时可导致腹直肌下半部无力，当患者于仰卧位用力抬头时，可见脐孔被腹直肌上半部牵拉而向上移动，称比弗征（Beevor sign）。如发现上（T₇₋₈）、中（T₉₋₁₀）、下（T₁₁₋₁₂）腹壁反射消失，亦有助于各节段的定位。</span></p>
+    <p class="list-item-sub"><span class="nest-num">（4）</span><span class="lesion-area">腰膨大（L₁～S₂）</span>：<span class="lesion-symptom">受损时出现双下肢下运动神经元性瘫痪，双下肢及会阴部各种感觉缺失，括约肌障碍。腰膨大上段受损时，神经根痛位于腹股沟区或下背部，下段受损时表现为坐骨神经痛。如损害平面在L₂₋₄则膝反射往往消失，如病变在S₁₋₂则踝反射往往消失，如S₁₋₃受损则出现阳痿。</span></p>
+    <p class="list-item-sub"><span class="nest-num">（5）</span><span class="lesion-area">脊髓圆锥（S₃₋₅和尾节）</span>：<span class="lesion-symptom">支配下肢运动的神经来自腰膨大，故脊髓圆锥损害无双下肢瘫痪，也无锥体束征。肛门周围和会阴部感觉缺失，呈鞍状分布，肛门反射消失和性功能障碍。髓内病变可出现分离性感觉障碍。脊髓圆锥为括约肌功能的副交感中枢，因此圆锥病变可出现真性尿失禁。</span>见于外伤和肿瘤。</p>
+    <p class="list-item-sub"><span class="nest-num">（6）</span><span class="lesion-area">马尾神经根</span>：<span class="lesion-symptom">马尾和脊髓圆锥病变的临床表现相似，但马尾损害时症状和体征可为单侧或不对称。根性疼痛和感觉障碍位于会阴部、股部和小腿，下肢可有下运动神经元性瘫痪，括约肌障碍常不明显。</span>见于外伤性腰椎间盘脱出（L₁或L₂以下）和马尾肿瘤。</p>
+
+    <div class="divider-dot">· · · · · ·</div>
+    <p style="text-align:right;font-size:0.7rem;color:#b8a48c;letter-spacing:0.05em;margin-top:1.5rem;">
+        — 手账笔记 · 脊髓 —
+    </p>
+</div>
+</body>
+</html>
